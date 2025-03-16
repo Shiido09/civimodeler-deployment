@@ -26,7 +26,7 @@ export const AppContextProvider = (props) => {
             if (error.response && error.response.status === 401) {
                 setIsLoggedin(false);
                 setUserData(null);
-                toast.error("Unauthorized access. Please log in.");
+                // Do not show an error toast for unauthorized access
             } else {
                 toast.error(error.message || 'An error occurred');
             }
