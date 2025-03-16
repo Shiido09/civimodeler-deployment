@@ -8,7 +8,8 @@
     "train": "cd python && python train_model.py",
     "start": "concurrently \"cd python && python train_model.py\" \"nodemon server.js\"",
     "dev": "nodemon server.js",
-    "download-threejs": "node utils/downloadThreeJs.js"
+    "download-threejs": "node utils/downloadThreeJs.js",
+    "postinstall": "chmod +x ./node_modules/.bin/*"
   },
   "author": "",
   "license": "ISC",
