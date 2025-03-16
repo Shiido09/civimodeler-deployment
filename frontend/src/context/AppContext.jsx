@@ -29,6 +29,7 @@ export const AppContextProvider = (props) => {
                 // Handle 401 Unauthorized error gracefully
                 setIsLoggedin(false);
                 setUserData(null);
+                toast.error("Unauthorized access. Please log in.");
             } else {
                 toast.error(error.message || 'An error occurred');
             }
@@ -68,8 +69,7 @@ export const AppContextProvider = (props) => {
         setIsLoggedin,
         getUserData,
         userData,
-        setUserData,
-        loading, // Add loading to context value
+        loading,
     };
 
     return (
