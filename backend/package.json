@@ -16,8 +16,8 @@
     "axios": "^1.7.9",
     "bcrypt": "^5.1.1",
     "bcryptjs": "^2.4.3",
-    "concurrently": "^9.1.2",
     "cloudinary": "^2.5.1",
+    "concurrently": "^9.1.2",
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
     "dotenv": "^16.4.7",
@@ -30,7 +30,5 @@
     "puppeteer": "^24.4.0",
     "url": "^0.11.4",
     "uuid": "^11.1.0"
-  },
-  "devDependencies": {
   }
 }
