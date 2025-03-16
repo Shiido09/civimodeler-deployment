@@ -1,5 +1,4 @@
 import React from "react";
-import axios from "axios"; // Import axios
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
 import { Routes, Route } from "react-router-dom";
@@ -28,8 +27,17 @@ import Help from "./pages/User Pages/Help";
 import SampleProjects from "./pages/User Pages/SampleProjects";
 import Testimony from "./pages/Guest Pages/Testimony";
 import Projects from "./pages/Guest Pages/Projects";
+import ProjectOverview from "./pages/User Pages/ProjectOverview";
+import ProjectViewer from "./pages/User Pages/Project Viewing Components/ProjectViewer";
+import ProjectLayout from "./pages/User Pages/Project Viewing Components/ProjectLayout";
+import ProfileLayout from "./pages/User Pages/Profile Components/ProfileLayout";
+import ProfileOverview from "./pages/User Pages/Profile Components/Overview";
+import UserFeedback from "./pages/User Pages/UserFeedback";
+import Security from "./pages/User Pages/Profile Components/Security";
+import ContractorProfile from "./pages/User Pages/ContractorProfile";
+import ContractorList from "./pages/User Pages/ContractorList";
+import StatusActivation from "./components/Auth Components/StatusActivation";
 
-// Set axios defaults
 axios.defaults.withCredentials = true;
 
 const App = () => {
