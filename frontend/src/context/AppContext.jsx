@@ -40,9 +40,9 @@ export const AppContextProvider = (props) => {
     const getUserData = async () => {
         try {
             const { data } = await axios.get(`${backendUrl}/api/user/data`, { withCredentials: true });
-    
-            console.log("Raw API response:", data);
-    
+            
+            console.log("Raw API response:", data); // Debug log
+            
             if (data.success && data.user) { 
                 console.log('User data fetched successfully:', data.user);
                 setUserData(data.user); 

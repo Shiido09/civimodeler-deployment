@@ -81,6 +81,7 @@ export const login = async (req, res) => {
             sameSite: process.env.NODE_ENV === "production" ? "none" : "strict",
             maxAge: 7 * 24 * 60 * 60 * 1000
         });
+        console.log("Token set in cookie:", token);
 
         return res.json({ 
             success: true, 
@@ -90,6 +91,7 @@ export const login = async (req, res) => {
             DeactivationCount: user.DeactivationCount,
             status: user.status
         });
+
 
     } catch (error) {
         res.json({ success: false, message: error.message });
