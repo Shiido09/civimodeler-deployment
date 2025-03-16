@@ -2,6 +2,7 @@ import React from "react";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
 import { Routes, Route } from "react-router-dom";
+import { AppContext } from "./context/AppContext";
 import Home from "./pages/Guest Pages/Home";
 import Login from "./pages/Guest Pages/Login";
 import Register from "./pages/Guest Pages/Register";
