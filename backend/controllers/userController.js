@@ -2,7 +2,7 @@ import cloudinary from "cloudinary";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
 import userModel from "../models/userModel.js";
-import bcrypt from "bcrypt";
+import bcrypt from 'bcryptjs';
 import transporter from '../config/nodemailer.js';
 
 
