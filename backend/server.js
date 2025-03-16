@@ -24,7 +24,7 @@ app.use(express.json());
 app.use(cookieParser());
 const allowedOrigins = [ 
   'http://localhost:5173', // for local dev
-  process.env.CLIENT_URL     // for production (put your deployed frontend URL here in the .env file)
+  'https://civimodeler-deployment.onrender.com' // for production
 ];
 
 app.use(cors({
