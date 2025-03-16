@@ -22,6 +22,7 @@ connectDB();
 
 app.use(express.json());
 app.use(cookieParser());
+
 const allowedOrigins = [ 
   'http://localhost:5173', // for local dev
   'https://civimodeler-deployment.onrender.com' // for production

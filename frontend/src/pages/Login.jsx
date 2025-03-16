@@ -20,22 +20,22 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      axios.defaults.withCredentials = true;
-      const { data } = await axios.post(backendUrl + '/api/auth/login', {
-        email: formData.email,
-        password: formData.password
-      });
-      if (data.success) {
-        setIsLoggedin(true);
-        getUserData();
-        navigate('/');
-      } else {
-        toast.error(data.error);
-      }
+        axios.defaults.withCredentials = true;
+        const { data } = await axios.post(backendUrl + '/api/auth/login', {
+            email: formData.email,
+            password: formData.password
+        });
+        if (data.success) {
+            setIsLoggedin(true);
+            await getUserData();
+            navigate('/');
+        } else {
+            toast.error(data.error);
+        }
     } catch (error) {
-      toast.error('An error occurred. Please try again.');
+        toast.error('An error occurred. Please try again.');
     }
-  };
+};
 
   const handleGoogleSignIn = () => {}
 
