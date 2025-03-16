@@ -1,28 +1,25 @@
-import * as React from 'react';
+import React, { useContext, useState } from 'react';
 import { Box, Stepper, Step, StepLabel, Button, TextField, Typography, MenuItem, Select, InputLabel, FormControl } from '@mui/material';
 import { FaArrowLeft } from "react-icons/fa";
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import '/styles/ProjectDetail.css?url';
 import { AppContext } from '../../context/AppContext';
-import { useContext } from 'react';
+import './ProjectDetail.css'; // Corrected import statement
 
 const steps = ['Project Details', 'Setting-up'];
 
 export default function ProjectDetail() {
-
-  const { backendUrl, userData } = React.useContext(AppContext);
-
-  const [activeStep, setActiveStep] = React.useState(0);
-  const [formData, setFormData] = React.useState({
+  const { backendUrl, userData } = useContext(AppContext);
+  const [activeStep, setActiveStep] = useState(0);
+  const [formData, setFormData] = useState({
     projectName: '',
     locationSize: '',
     projectBudget: '',
     projectDescription: '',
     designStyle: 'Modern' // Default design style
   });
-  const [errorMessage, setErrorMessage] = React.useState('');
-  const [formErrors, setFormErrors] = React.useState('');
+  const [errorMessage, setErrorMessage] = useState('');
+  const [formErrors, setFormErrors] = useState('');
   const navigate = useNavigate();
 
   const handleNext = () => {
@@ -45,32 +42,6 @@ export default function ProjectDetail() {
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleGetQuote = async () => {
-    if (validateForm())
-      try {
-        // Ensure userData exists (i.e. the user is logged in)
-        if (!userData) {
-          console.error('User data not available');
-          setErrorMessage('User is not logged in');
-          return;
-        }
-
-        const estimateResponse = await axios.post('http://localhost:5001/estimate', {
-          budget: formData.projectBudget,
-          size: formData.locationSize,
-          design_style: formData.designStyle
-        });
-
-        navigate('/user/project-result', { state: { ...formData, result: estimateResponse.data } });
-      } catch (error) {
-        const errorMsg = error.response?.data?.error
-          ? String(error.response.data.error)
-          : error.message || 'An error occurred';
-        setErrorMessage(errorMsg);
-        console.error('Error processing request:', error);
-      }
-  };
-
   const validateForm = () => {
     let errors = {};
     if (activeStep === 0) {
@@ -84,10 +55,34 @@ export default function ProjectDetail() {
     return Object.keys(errors).length === 0;
   };
 
+  const handleGetQuote = async () => {
+    if (validateForm()) {
+      try {
+        if (!userData) {
+          console.error('User data not available');
+          setErrorMessage('User is not logged in');
+          return;
+        }
+
+        const estimateResponse = await axios.post(`${backendUrl}/estimate`, {
+          budget: formData.projectBudget,
+          size: formData.locationSize,
+          design_style: formData.designStyle
+        });
+
+        navigate('/user/project-result', { state: { ...formData, result: estimateResponse.data } });
+      } catch (error) {
+        const errorMsg = error.response?.data?.error
+          ? String(error.response.data.error)
+          : error.message || 'An error occurred';
+        setErrorMessage(errorMsg);
+        console.error('Error processing request:', error);
+      }
+    }
+  };
+
   return (
     <div className="container mx-auto">
-      {/* Header */}
-      <img className="rounded-lg mb-4 w-full" src="/project images/H6.png" alt="CiviModeler H5" />
       <Box sx={{ width: '100%', maxWidth: 600, margin: 'auto', padding: 4, fontFamily: 'Outfit, sans-serif', height: '100vh', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
         <Stepper activeStep={activeStep} alternativeLabel sx={{ '& .MuiStepIcon-root.Mui-active': { color: '#5a2b79' }, '& .MuiStepIcon-root.Mui-completed': { color: '#5a2b79' } }}>
           {steps.map((label) => (
