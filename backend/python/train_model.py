@@ -8,7 +8,7 @@ from trimesh.exchange.gltf import export_gltf
 import json
 
 app = Flask(__name__)
-CORS(app, supports_credentials=True, origins=["http://localhost:5173"])
+CORS(app, supports_credentials=True, origins=["http://localhost:5173", "https://civimodeler-deployment.onrender.com"])
 
 @app.route('/estimate', methods=['POST'])
 def estimate():
@@ -41,21 +41,6 @@ def estimate():
 
 @app.route('/estimate-from-components', methods=['POST'])
 def estimate_from_components():
-    """
-    Estimate materials based on model components.
-    
-    Expects JSON with:
-    {
-        "components": [
-            {"name": "wall", "quantity": 5},
-            {"name": "roof", "quantity": 1},
-            ...
-        ],
-        "budget": 10000,
-        "size": 100,
-        "design_style": "Modern"
-    }
-    """
     data = request.get_json()
     components = data.get("components", [])
     budget = data.get("budget")
@@ -65,15 +50,12 @@ def estimate_from_components():
     if not all([budget, size, design_style]):
         return jsonify({"error": "Missing required fields"}), 400
     
-    # Get base estimation
     base_result = estimate_materials(budget, size, design_style)
     if "error" in base_result:
         return jsonify(base_result), 400
     
-    # Adjust estimation based on components
     materials = base_result["materials"].copy()
     
-    # Component to material mapping
     component_material_map = {
         "wall": "Bricks",
         "floor": "Cement",
@@ -88,15 +70,12 @@ def estimate_from_components():
         "paint": "Paint",
     }
     
-    # Adjust quantities based on components
     for component in components:
         name = component.get("name", "").lower()
         quantity = component.get("quantity", 0)
         
-        # Find what material this component impacts
         for key_word, material in component_material_map.items():
             if key_word in name and material in materials:
-                # Adjust the material quantity based on component
                 factor = 1.0
                 if "added" in component:
                     factor = 1.0 + (component.get("added", 0) * 0.1)
@@ -108,10 +87,8 @@ def estimate_from_components():
                 materials[material]["total_price"] = round(materials[material]["quantity"] * materials[material]["unit_price"], 2)
                 break
     
-    # Recalculate total cost and format materials
     total_cost = sum(material["total_price"] for material in materials.values())
     
-    # Format materials to be consistent with frontend expectations
     formatted_materials = {}
     for material_name, details in materials.items():
         formatted_materials[material_name] = {
@@ -139,7 +116,7 @@ def generate_model():
         export_gltf(mesh, temp_file.name)
         model_path = temp_file.name
     
-    return jsonify({"model_url": f"http://localhost:5001/download-model/{os.path.basename(model_path)}"})
+    return jsonify({"model_url": f"https://civimodeler-deployment.onrender.com/download-model/{os.path.basename(model_path)}"})
 
 @app.route('/download-model/<filename>', methods=['GET'])
 def download_model(filename):

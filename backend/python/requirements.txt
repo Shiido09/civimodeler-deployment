@@ -1,0 +1,6 @@
+Flask==3.0.0
+Flask-Cors==4.0.0
+trimesh==4.0.4
+gunicorn==21.2.0
+numpy>=1.24.0
+scipy>=1.10.0

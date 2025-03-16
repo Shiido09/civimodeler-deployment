@@ -22,9 +22,14 @@ connectDB();
 
 app.use(express.json());
 app.use(cookieParser());
+const allowedOrigins = [ 
+  'http://localhost:5173', // for local dev
+  process.env.CLIENT_URL     // for production (put your deployed frontend URL here in the .env file)
+];
+
 app.use(cors({
-  origin: 'http://localhost:5173', // specify your client URL
-  credentials: true
+  origin: allowedOrigins,
+  credentials: true,
 }));
 
 // Add file upload middleware

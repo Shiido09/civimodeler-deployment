@@ -5,7 +5,8 @@
   "main": "server.js",
   "type": "module",
   "scripts": {
-    "start": "node server.js",
+    "train": "cd python && python train_model.py",
+    "start": "concurrently \"cd python && python train_model.py\" \"nodemon server.js\"",
     "dev": "nodemon server.js",
     "download-threejs": "node utils/downloadThreeJs.js"
   },
@@ -28,5 +29,8 @@
     "puppeteer": "^24.4.0",
     "url": "^0.11.4",
     "uuid": "^11.1.0"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2"
   }
 }
