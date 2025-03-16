@@ -38,7 +38,7 @@ import ContractorProfile from "./pages/User Pages/ContractorProfile";
 import ContractorList from "./pages/User Pages/ContractorList";
 import StatusActivation from "./components/Auth Components/StatusActivation";
 
-axios.defaults.withCredentials = true;
+
 
 const App = () => {
   return (
