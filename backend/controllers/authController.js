@@ -32,20 +32,6 @@ export const register = async (req, res) => {
             maxAge: 7 * 24 * 60 * 60 * 1000 // 7 days
         });
 
-        // Sending Welcome Email
-        const mailOptions = {
-            from: process.env.SENDER_EMAIL,
-            to: email,
-            subject: "Welcome to our website",
-            text: `Hello ${name}, welcome to our CiviModeler. We're glad to have you. Your account has been created successfully with the email: ${email}.`
-        };
-
-        try {
-            await transporter.sendMail(mailOptions);
-        } catch (emailError) {
-            console.error("Error sending welcome email:", emailError);
-        }
-
         return res.status(201).json({ success: true, message: "User registered and logged in successfully" });
 
     } catch (error) {
@@ -94,22 +80,7 @@ export const login = async (req, res) => {
     } catch (error) {
       res.json({ success: false, message: error.message });
     }
-  };
-
-export const logout = async (req, res) => {
-    try {
-        res.clearCookie("token", {
-            httpOnly: true,
-            secure: process.env.NODE_ENV === "production",
-            sameSite: process.env.NODE_ENV === "production" ? "none" : "strict"
-        });
-
-        return res.json({ success: true, message: "Logged out successfully" });
-
-    } catch (error) {
-        res.json({ success: false, message: error.message });
-    }
-}
+};
 
 export const sendVerifyOtp = async (req, res) => {
     try {
@@ -193,7 +164,7 @@ export const verifyEmail = async (req, res) => {
     }
 };
 
-export const isAuthenticated = async (req, res, next) => {
+export const isAuthenticated = async (req, res) => {
     try {
         const token = req.cookies.token;
         if (!token) {
