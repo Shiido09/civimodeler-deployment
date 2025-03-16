@@ -1,8 +1,7 @@
-import React, { useContext } from "react";
+import React from "react";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
 import { Routes, Route } from "react-router-dom";
-import { AppContext } from "./context/AppContext";
 import Home from "./pages/Guest Pages/Home";
 import Login from "./pages/Guest Pages/Login";
 import Register from "./pages/Guest Pages/Register";
@@ -14,6 +13,18 @@ import GeneratingPage from "./components/Pages Components/GeneratingPage";
 import ProjectDetail from "./pages/User Pages/ProjectDetail";
 import Dashboard from "./pages/Admin Pages/Dashboard";
 import Reports from "./pages/Admin Pages/Reports";
+import AdminLayout from "./pages/Admin Pages/AdminLayout";
+import ProjectManagement from "./pages/Admin Pages/ProjectManagement";
+import UserManagement from "./pages/Admin Pages/UserManagement";
+import ProjectResult from "./pages/User Pages/projectResult";
+import EmailVerify from "./components/Auth Components/EmailVerify";
+import ResetPassord from "./components/Auth Components/ResetPassword";
+import Profile from "./pages/User Pages/Profile Components/Profile";
+import UserLayout from "./pages/User Pages/UserLayout";
+import UserHome from "./pages/User Pages/Home Page Components/UserHome";
+import UserProjects from "./pages/User Pages/UserProjects";
+import Help from "./pages/User Pages/Help";
+import SampleProjects from "./pages/User Pages/SampleProjects";
 import Testimony from "./pages/Guest Pages/Testimony";
 import Projects from "./pages/Guest Pages/Projects";
 import ProjectOverview from "./pages/User Pages/ProjectOverview";
@@ -26,8 +37,8 @@ import Security from "./pages/User Pages/Profile Components/Security";
 import ContractorProfile from "./pages/User Pages/ContractorProfile";
 import ContractorList from "./pages/User Pages/ContractorList";
 import StatusActivation from "./components/Auth Components/StatusActivation";
-
 const App = () => {
+
   const { isLoggedin, loading } = useContext(AppContext);
 
   if (loading) {
@@ -70,24 +81,23 @@ const App = () => {
           }
         />
         {/* User Interface */}
-        {isLoggedin && (
-          <Route path="/user/*" element={<UserLayout />}>
-            <Route path="home" element={<UserHome />} />
-            <Route path="contractors" element={<ContractorList />} />
-            <Route path="contractor/:id" element={<ContractorProfile />} />
-            <Route path="sample-projects" element={<SampleProjects />} />
-            <Route path="project-result" element={<ProjectResult />} />
-            <Route path="user-projects" element={<UserProjects />} />
-            <Route path="help" element={<Help />} />
-            <Route path="project-overview" element={<ProjectOverview />} />
-            <Route path="feedback" element={<UserFeedback/>} />
-            <Route path="project-detail" element={<ProjectDetail />} />
-          </Route>
-        )}
+        <Route path="/user/*" element={<UserLayout />}>
+          <Route path="home" element={<UserHome />} />
+          <Route path="contractors" element={<ContractorList />} />
+          <Route path="contractor/:id" element={<ContractorProfile />} />
+          <Route path="sample-projects" element={<SampleProjects />} />
+          <Route path="project-result" element={<ProjectResult />} />
+          <Route path="user-projects" element={<UserProjects />} />
+          <Route path="help" element={<Help />} />
+          <Route path="project-overview" element={<ProjectOverview />} />
+          <Route path="feedback" element={<UserFeedback/>} />
+          <Route path="project-detail" element={<ProjectDetail />} />
+        </Route>
 
         {/* Project Viewing Interface */}
         <Route path="/project-viewer/*" element={<ProjectLayout />}>
           <Route path="work-station" element={<ProjectViewer />} />
+
         </Route>
         {/* Admin Interface */}
         <Route path="/admin/*" element={<AdminLayout />}>
