@@ -24,7 +24,7 @@ app.use(express.json());
 app.use(cookieParser());
 
 const allowedOrigins = [ 
-  'https://civimodeler-deployment.onrender.com'
+  'https://civimodeler-deployment.vercel.app'
 ];
 
 app.use(cors({
